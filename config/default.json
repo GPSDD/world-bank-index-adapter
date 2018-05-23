@@ -1,0 +1,13 @@
+{
+     "logger": {
+        "name": "world-bank-index-adapter-DEV",
+        "level": "debug",
+        "toFile": false,
+        "dirLogFile": null
+    },
+    "service": {
+        "id": "world-bank-index-adapter_1.0.0",
+        "name": "WB Indexing Adapter",
+        "port": 3010
+    }
+}

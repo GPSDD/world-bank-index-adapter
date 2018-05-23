@@ -1,0 +1,128 @@
+{
+	"name": "World Bank Index Adapter",
+	"cache": ["index-wb"],
+	"uncache": ["index-wb"],
+	"tags": ["rw"],
+	"endpoints": [{
+		"path": "/v1/query/:dataset",
+		"method": "GET",
+		"binary": true,
+		"redirect": {
+			"method": "POST",
+			"path": "/api/v1/wb-index/query/:dataset"
+		},
+		"filters": [{
+			"name": "dataset",
+			"path": "/v1/dataset/:dataset",
+			"method": "GET",
+			"params": {
+				"dataset": "dataset"
+			},
+			"compare": {
+				"data": {
+					"attributes": {
+						"provider": "wb-index"
+					}
+				}
+			}
+		}]
+	}, {
+		"path": "/v1/query/:dataset",
+		"method": "POST",
+		"binary": true,
+		"redirect": {
+			"method": "POST",
+			"path": "/api/v1/wb-index/query/:dataset"
+		},
+		"filters": [{
+			"name": "dataset",
+			"path": "/v1/dataset/:dataset",
+			"method": "GET",
+			"params": {
+				"dataset": "dataset"
+			},
+			"compare": {
+				"data": {
+					"attributes": {
+						"provider": "wb-index"
+					}
+				}
+			}
+		}]
+	},{
+		"path": "/v1/download/:dataset",
+		"method": "GET",
+		"binary": true,
+		"redirect": {
+			"method": "POST",
+			"path": "/api/v1/wb-index/download/:dataset"
+		},
+		"filters": [{
+			"name": "dataset",
+			"path": "/v1/dataset/:dataset",
+			"method": "GET",
+			"params": {
+				"dataset": "dataset"
+			},
+			"compare": {
+				"data": {
+					"attributes": {
+						"provider": "wb-index"
+					}
+				}
+			}
+		}]
+	}, {
+		"path": "/v1/download/:dataset",
+		"method": "POST",
+		"binary": true,
+		"redirect": {
+			"method": "POST",
+			"path": "/api/v1/wb-index/download/:dataset"
+		},
+		"filters": [{
+			"name": "dataset",
+			"path": "/v1/dataset/:dataset",
+			"method": "GET",
+			"params": {
+				"dataset": "dataset"
+			},
+			"compare": {
+				"data": {
+					"attributes": {
+						"provider": "wb-index"
+					}
+				}
+			}
+		}]
+	}, {
+		"path": "/v1/fields/:dataset",
+		"method": "GET",
+		"redirect": {
+			"method": "POST",
+			"path": "/api/v1/wb-index/fields/:dataset"
+		},
+		"filters": [{
+			"name": "dataset",
+			"path": "/v1/dataset/:dataset",
+			"method": "GET",
+			"params": {
+				"dataset": "dataset"
+			},
+			"compare": {
+				"data": {
+					"attributes": {
+						"provider": "wb-index"
+					}
+				}
+			}
+		}]
+	}, {
+		"path": "/v1/rest-datasets/wb-index",
+		"method": "POST",
+		"redirect": {
+			"method": "POST",
+			"path": "/api/v1/wb-index/rest-datasets/wb-index"
+		}
+	}]
+}

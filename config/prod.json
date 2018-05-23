@@ -1,0 +1,10 @@
+{
+    "logger": {
+        "name": "world-bank-index-adapter",
+        "level": "warn",
+        "toFile": false,
+        "dirLogFile": null
+    },
+    "service": {
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "logger": {
+        "name": "3010",
+        "level": "debug",
+        "toFile": false,
+        "dirLogFile": null
+    },
+    "service": {
+    }
+}

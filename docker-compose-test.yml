@@ -1,0 +1,11 @@
+test:
+  extends:
+    file: base.yml
+    service: base
+  ports:
+    - "3010"
+  container_name: world-bank-index-adapter-test
+  environment:
+    NODE_ENV: test
+    CT_URL: http://mymachine:9000
+  command: test

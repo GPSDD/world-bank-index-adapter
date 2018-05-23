@@ -1,0 +1,13 @@
+prod:
+  image: vizzuality/world-bank-index-adapter:1.2.0${STAGING}
+  ports:
+    - "3010"
+  env_file:
+    - prod.env
+  command: start
+  dns: ${DNS_SERVER}
+  restart: always
+  log_driver: "syslog"
+  log_opt:
+      syslog-address: ${SYSLOG_ADDRESS}
+      tag: world-bank-index-adapter${STAGING}
