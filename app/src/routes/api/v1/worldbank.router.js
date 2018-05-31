@@ -1,11 +1,11 @@
 const Router = require('koa-router');
 const logger = require('logger');
 const ctRegisterMicroservice = require('ct-register-microservice-node');
-const WBIndexService = require('services/wb-index.service');
+const WBIndexService = require('services/worldbank.service');
 const FieldSerializer = require('serializers/field.serializer');
 
 const router = new Router({
-    prefix: '/wb-index',
+    prefix: '/worldbank',
 });
 
 class WbIndexRouter {
@@ -29,7 +29,7 @@ class WbIndexRouter {
     static async registerDataset(ctx) {
         logger.info('Registering dataset with data', ctx.request.body);
         try {
-            await WBIndexService.getFields(ctx.request.body.connector.connectorUrl, ctx.request.body.connector.tableName);
+            await WBIndexService.register(ctx.request.body.connector, ctx.request.body.userId);
             await ctRegisterMicroservice.requestToMicroservice({
                 method: 'PATCH',
                 uri: `/dataset/${ctx.request.body.connector.id}`,
@@ -41,6 +41,7 @@ class WbIndexRouter {
                 json: true
             });
         } catch (e) {
+            logger.error(e);
             await ctRegisterMicroservice.requestToMicroservice({
                 method: 'PATCH',
                 uri: `/dataset/${ctx.request.body.connector.id}`,
@@ -61,6 +62,6 @@ class WbIndexRouter {
 router.post('/query/:dataset', WbIndexRouter.dataAccessNotSupported);
 router.post('/download/:dataset', WbIndexRouter.dataAccessNotSupported);
 router.post('/fields/:dataset', WbIndexRouter.dataAccessNotSupported);
-router.post('/rest-datasets/wb-index', WbIndexRouter.registerDataset);
+router.post('/rest-datasets/worldbank', WbIndexRouter.registerDataset);
 
 module.exports = router;

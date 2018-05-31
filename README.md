@@ -34,3 +34,21 @@ It is necessary to define these environment variables:
 
 * CT_URL => Control Tower URL
 * NODE_ENV => Environment (prod, staging, dev)
+
+## Field correspondence
+
+
+| Field in SDG Metadata     | Field in WB Metadata  | Value         |
+|---------------------------|-----------------------|---------------|
+| userId                    | -                     | 'published'   |
+| language                  |                       | 'en'          |
+| resource                  |                       |               |
+| name                      | name                  |               |
+| description               | sourceNote            |               |
+| sourceOrganization        | -                     | 'World Bank Group' |
+| dataDownloadUrl           | -                     | 'https://api.worldbank.org/v2/countries/all/indicators/:indicator?format=json&per_page=30000' with :indicator = id of indicator|
+| dataSourceUrl             | -                     | 'https://data.worldbank.org/indicator/:indicator' with :indicator = id of indicator       |
+| dataSourceEndpoint        |                       | 'https://api.worldbank.org/v2/countries/all/indicators/:indicator?format=json&per_page=30000' with :indicator = id of indicator|
+| license                   |                       | 'CC BY 4.0'   |
+| info                      | topics                |               |
+| status                    | -                     | 'published'   |
