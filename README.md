@@ -38,10 +38,17 @@ It is necessary to define these environment variables:
 ## Field correspondence
 
 
-| Field in SDG Metadata  | Field in WB Metadata  | Value |
-|--|--|--|
-| name  | name  | |
-| description  | sourceNote  | |
-| sourceOrganization  | - | 'World Bank Group' |
-| dataSourceUrl  | - | 'https://api.worldbank.org/v2/countries/all/indicators/:indicator?date=0000:2017&format=json&per_page=30000' with :indicator = id of indicator|
-| status | - | 'published' |
+| Field in SDG Metadata     | Field in WB Metadata  | Value         |
+|---------------------------|-----------------------|---------------|
+| userId                    | -                     | 'published'   |
+| language                  |                       | 'en'          |
+| resource                  |                       |               |
+| name                      | name                  |               |
+| description               | sourceNote            |               |
+| sourceOrganization        | -                     | 'World Bank Group' |
+| dataDownloadUrl           | -                     | 'https://api.worldbank.org/v2/countries/all/indicators/:indicator?date=0000:2017&format=json&per_page=30000' with :indicator = id of indicator|
+| dataSourceUrl             | -                     | 'https://data.worldbank.org/indicator/:indicator' with :indicator = id of indicator       |
+| dataSourceEndpoint        |                       | 'https://api.worldbank.org/v2/countries/all/indicators/:indicator?date=0000:2017&format=json&per_page=30000' with :indicator = id of indicator|
+| license                   |                       | 'CC BY 4.0'   |
+| info                      | topics                |               |
+| status                    | -                     | 'published'   |
