@@ -9,7 +9,7 @@
 		"binary": true,
 		"redirect": {
 			"method": "POST",
-			"path": "/api/v1/wb-index/query/:dataset"
+			"path": "/api/v1/worldbank/query/:dataset"
 		},
 		"filters": [{
 			"name": "dataset",
@@ -21,7 +21,7 @@
 			"compare": {
 				"data": {
 					"attributes": {
-						"provider": "wb-index"
+						"provider": "worldbank"
 					}
 				}
 			}
@@ -32,7 +32,7 @@
 		"binary": true,
 		"redirect": {
 			"method": "POST",
-			"path": "/api/v1/wb-index/query/:dataset"
+			"path": "/api/v1/worldbank/query/:dataset"
 		},
 		"filters": [{
 			"name": "dataset",
@@ -44,7 +44,7 @@
 			"compare": {
 				"data": {
 					"attributes": {
-						"provider": "wb-index"
+						"provider": "worldbank"
 					}
 				}
 			}
@@ -55,7 +55,7 @@
 		"binary": true,
 		"redirect": {
 			"method": "POST",
-			"path": "/api/v1/wb-index/download/:dataset"
+			"path": "/api/v1/worldbank/download/:dataset"
 		},
 		"filters": [{
 			"name": "dataset",
@@ -67,7 +67,7 @@
 			"compare": {
 				"data": {
 					"attributes": {
-						"provider": "wb-index"
+						"provider": "worldbank"
 					}
 				}
 			}
@@ -78,7 +78,7 @@
 		"binary": true,
 		"redirect": {
 			"method": "POST",
-			"path": "/api/v1/wb-index/download/:dataset"
+			"path": "/api/v1/worldbank/download/:dataset"
 		},
 		"filters": [{
 			"name": "dataset",
@@ -90,7 +90,7 @@
 			"compare": {
 				"data": {
 					"attributes": {
-						"provider": "wb-index"
+						"provider": "worldbank"
 					}
 				}
 			}
@@ -100,7 +100,7 @@
 		"method": "GET",
 		"redirect": {
 			"method": "POST",
-			"path": "/api/v1/wb-index/fields/:dataset"
+			"path": "/api/v1/worldbank/fields/:dataset"
 		},
 		"filters": [{
 			"name": "dataset",
@@ -112,17 +112,17 @@
 			"compare": {
 				"data": {
 					"attributes": {
-						"provider": "wb-index"
+						"provider": "worldbank"
 					}
 				}
 			}
 		}]
 	}, {
-		"path": "/v1/rest-datasets/wb-index",
+		"path": "/v1/rest-datasets/worldbank",
 		"method": "POST",
 		"redirect": {
 			"method": "POST",
-			"path": "/api/v1/wb-index/rest-datasets/wb-index"
+			"path": "/api/v1/worldbank/rest-datasets/worldbank"
 		}
 	}]
 }
