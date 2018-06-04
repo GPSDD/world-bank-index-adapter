@@ -6,7 +6,35 @@ const ctRegisterMicroservice = require('ct-register-microservice-node');
 
 class WBIndexService {
 
-    static async register(dataset, userId) {
+    
+
+    static async cronUpdate() {
+        try {
+            logger.info('Running cron update');
+            logger.debug('Obtaining datasets');
+            const datasets = await ctRegisterMicroservice.requestToMicroservice({
+                method: 'GET',
+                uri: `/dataset?provider=worldbank&page[size]=99999&status=saved`,
+                json: true
+            });
+            if (datasets && datasets.data) {
+                for (let i = 0, length = datasets.data.length; i < length; i++) {
+                    try {
+                        const dataset = datasets.data[i].attributes;
+                        dataset.id = datasets.data[i].id;
+                        await WBIndexService.register(dataset, dataset.userId, true);
+                    } catch(err) {
+                        logger.error('Error updating dataset', err);
+                    }
+                }
+            }
+        } catch(err) {
+            logger.error('Error in cronupdate', err);
+            throw err;
+        }
+    }
+
+    static async register(dataset, userId, update= false) {
         logger.debug(`Obtaining metadata of indicator ${dataset.tableName}`);
 
         logger.debug('Obtaining metadata of dataset ', `${config.worldbank.metadata}`.replace(':indicator', dataset.tableName));
@@ -29,19 +57,28 @@ class WBIndexService {
                 dataSourceUrl: config.worldbank.dataSourceUrl.replace(':indicator', dataset.tableName),
                 dataSourceEndpoint: config.worldbank.dataSourceEndpoint.replace(':indicator', dataset.tableName),
                 status: 'published',
-                license: 'CC BY 4.0',
+                license: 'CC-BY',
                 userId,
                 info: {
                     topics: wbMetadata.topics && Array.isArray(wbMetadata.topics) ? wbMetadata.topics.map(e => e.value) : []
                 }
             };
             logger.debug('Saving metadata', metadata);
-            await ctRegisterMicroservice.requestToMicroservice({
-                method: 'POST',
-                uri: `/dataset/${dataset.id}/metadata`,
-                body: metadata,
-                json: true
-            });
+            if (!update) {
+                await ctRegisterMicroservice.requestToMicroservice({
+                    method: 'POST',
+                    uri: `/dataset/${dataset.id}/metadata`,
+                    body: metadata,
+                    json: true
+                });
+            } else {
+                await ctRegisterMicroservice.requestToMicroservice({
+                    method: 'PATCH',
+                    uri: `/dataset/${dataset.id}/metadata`,
+                    body: metadata,
+                    json: true
+                });
+            }
 
         } catch (err) {
             logger.error('Error obtaining metadata', err);

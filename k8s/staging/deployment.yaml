@@ -32,6 +32,8 @@ spec:
             value: app/src
           - name: LOCAL_URL
             value: http://{name}.default.svc.cluster.local:3010
+          - name: CRON_PATTERN
+            value: "00 0 1  * * *"
           - name: CT_URL
             valueFrom:
                 secretKeyRef:
@@ -52,11 +54,7 @@ spec:
                 secretKeyRef:
                   name: mssecrets
                   key: API_VERSION
-          - name: CARTODB_USER
-            valueFrom:
-                secretKeyRef:
-                  name: mssecrets
-                  key: CARTODB_USER
+
         ports:
           - containerPort: 3010
 
