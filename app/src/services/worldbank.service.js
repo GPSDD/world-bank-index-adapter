@@ -8,7 +8,7 @@ class WBIndexService {
 
     static async register(dataset, userId) {
         logger.debug(`Obtaining metadata of indicator ${dataset.tableName}`);
-        
+
         logger.debug('Obtaining metadata of dataset ', `${config.worldbank.metadata}`.replace(':indicator', dataset.tableName));
         try {
             const data = await requestPromise({
@@ -32,7 +32,7 @@ class WBIndexService {
                 license: 'CC BY 4.0',
                 userId,
                 info: {
-                    topics: wbMetadata.topics && Array.isArray(wbMetadata.topics)? wbMetadata.topics.map(e => e.value) : []
+                    topics: wbMetadata.topics && Array.isArray(wbMetadata.topics) ? wbMetadata.topics.map(e => e.value) : []
                 }
             };
             logger.debug('Saving metadata', metadata);
