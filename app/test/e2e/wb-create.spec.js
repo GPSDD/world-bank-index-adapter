@@ -30,7 +30,7 @@ describe('E2E test', () => {
                 dataSourceUrl: config.worldbank.dataSourceUrl.replace(':indicator', 'per_si_allsi.cov_pop_tot'),
                 dataSourceEndpoint: config.worldbank.dataSourceEndpoint.replace(':indicator', 'per_si_allsi.cov_pop_tot'),
                 status: 'published',
-                license: 'CC BY 4.0',
+                license: 'CC-BY',
                 userId: '1a10d7c6e0a37126611fd7a7',
                 info: {
                     topics: WB_API_METADATA.topics && Array.isArray(WB_API_METADATA.topics) ? WB_API_METADATA.topics.map(e => e.value) : []

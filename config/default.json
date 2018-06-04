@@ -14,5 +14,6 @@
         "metadata": "https://api.worldbank.org/v2/indicators/:indicator?format=json",
         "dataSourceUrl": "https://data.worldbank.org/indicator/:indicator",
         "dataSourceEndpoint": "https://api.worldbank.org/v2/countries/all/indicators/:indicator?format=json&per_page=30000"
-    }
+    },
+    "cron": "00 * * * * *"
 }

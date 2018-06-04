@@ -1,5 +1,6 @@
 {
     "service": {
         "port": "PORT"
-    }
+    },
+    "cron": "CRON_PATTERN"
 }

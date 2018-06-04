@@ -16,7 +16,7 @@ const koaBody = require('koa-body')({
 
 
 const app = new Koa();
-
+require('cron/cron');
 
 app.use(convert(koaBody));
 
