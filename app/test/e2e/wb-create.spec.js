@@ -2,7 +2,7 @@ const nock = require('nock');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const should = chai.should();
-const { WB_API_METADATA_RESPONSE, WB_DATASET_CREATE_REQUEST, WB_API_METADATA } = require('./test.constants');
+const { WB_API_METADATA_RESPONSE, WB_DATASET_CREATE_REQUEST, WB_API_METADATA, WB_API_FAKE_METADATA_RESPONSE, WB_FAKE_DATASET_CREATE_REQUEST } = require('./test.constants');
 const config = require('config');
 
 let requester;
@@ -13,12 +13,17 @@ describe('E2E test', () => {
     before(() => {
 
         nock(`${process.env.CT_URL}`)
-            .persist()
             .post(`/api/v1/microservice`)
+            .once()
             .reply(200);
         nock('https://api.worldbank.org')
-            .get(`/v2/indicators/per_si_allsi.cov_pop_tot?format=json`)
+            .get(`/v2/indicators/${WB_DATASET_CREATE_REQUEST.connector.tableName}?format=json`)
+            .once()
             .reply(200, WB_API_METADATA_RESPONSE);
+        nock('https://api.worldbank.org')
+            .get(`/v2/indicators/${WB_FAKE_DATASET_CREATE_REQUEST.connector.tableName}?format=json`)
+            .once()
+            .reply(200, WB_API_FAKE_METADATA_RESPONSE);
 
         // Metadata creation request
         nock(`${process.env.CT_URL}`)
@@ -45,10 +50,29 @@ describe('E2E test', () => {
                     status: 1
                 }
             })
+            .once()
+            .reply(200);
+
+
+        nock(`${process.env.CT_URL}`)
+            .patch(`/v1/dataset/${WB_FAKE_DATASET_CREATE_REQUEST.connector.id}`, {
+                dataset: {
+                    status: 2,
+                    errorMessage: 'Error - Error obtaining metadata'
+                }
+            })
+            .once()
             .reply(200);
 
         const server = require('../../src/app');
         requester = chai.request(server).keepOpen();
+    });
+
+    it('Create a dataset for an indicator that doesn\'t exist should return an error', async () => {
+        const response = await requester
+            .post(`/api/v1/worldbank/rest-datasets/worldbank`)
+            .send(WB_FAKE_DATASET_CREATE_REQUEST);
+        response.status.should.equal(200);
     });
 
     it('Create dataset should be successful (happy case)', async () => {
@@ -59,5 +83,8 @@ describe('E2E test', () => {
     });
 
     after(() => {
+        if (!nock.isDone()) {
+            throw new Error(`Not all nock interceptors were used: ${nock.pendingMocks()}`);
+        }
     });
 });

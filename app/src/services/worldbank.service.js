@@ -6,8 +6,6 @@ const ctRegisterMicroservice = require('ct-register-microservice-node');
 
 class WBIndexService {
 
-    
-
     static async cronUpdate() {
         try {
             logger.info('Running cron update');
@@ -23,18 +21,18 @@ class WBIndexService {
                         const dataset = datasets.data[i].attributes;
                         dataset.id = datasets.data[i].id;
                         await WBIndexService.register(dataset, dataset.userId, true);
-                    } catch(err) {
+                    } catch (err) {
                         logger.error('Error updating dataset', err);
                     }
                 }
             }
-        } catch(err) {
-            logger.error('Error in cronupdate', err);
+        } catch (err) {
+            logger.error('Error in cron update', err);
             throw err;
         }
     }
 
-    static async register(dataset, userId, update= false) {
+    static async register(dataset, userId, update = false) {
         logger.debug(`Obtaining metadata of indicator ${dataset.tableName}`);
 
         logger.debug('Obtaining metadata of dataset ', `${config.worldbank.metadata}`.replace(':indicator', dataset.tableName));
