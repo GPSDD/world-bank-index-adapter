@@ -34,6 +34,7 @@ describe('E2E test', () => {
                 sourceOrganization: 'World Bank Group',
                 dataSourceUrl: config.worldbank.dataSourceUrl.replace(':indicator', 'per_si_allsi.cov_pop_tot'),
                 dataSourceEndpoint: config.worldbank.dataSourceEndpoint.replace(':indicator', 'per_si_allsi.cov_pop_tot'),
+                dataDownloadUrl: config.worldbank.dataSourceEndpoint.replace(':indicator', 'per_si_allsi.cov_pop_tot'),
                 status: 'published',
                 license: 'CC-BY',
                 userId: '1a10d7c6e0a37126611fd7a7',
