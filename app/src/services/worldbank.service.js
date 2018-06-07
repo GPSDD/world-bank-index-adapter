@@ -54,6 +54,7 @@ class WBIndexService {
                 sourceOrganization: 'World Bank Group',
                 dataSourceUrl: config.worldbank.dataSourceUrl.replace(':indicator', dataset.tableName),
                 dataSourceEndpoint: config.worldbank.dataSourceEndpoint.replace(':indicator', dataset.tableName),
+                dataDownloadUrl: config.worldbank.dataSourceEndpoint.replace(':indicator', dataset.tableName),
                 status: 'published',
                 license: 'CC-BY',
                 userId,
