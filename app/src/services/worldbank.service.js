@@ -62,6 +62,7 @@ class WBIndexService {
                     topics: wbMetadata.topics && Array.isArray(wbMetadata.topics) ? wbMetadata.topics.map(e => e.value) : []
                 }
             };
+
             logger.debug('Saving metadata', metadata);
             if (!update) {
                 await ctRegisterMicroservice.requestToMicroservice({
@@ -82,6 +83,21 @@ class WBIndexService {
         } catch (err) {
             logger.error('Error obtaining metadata', err);
             throw new Error('Error obtaining metadata');
+        }
+
+        try {
+            logger.debug('Tagging dataset for WB dataset', dataset.tableName);
+            await ctRegisterMicroservice.requestToMicroservice({
+                method: 'POST',
+                uri: `/dataset/${dataset.id}/vocabulary/legacy`,
+                body: {
+                    tags: ['worldbank']
+                },
+                json: true
+            });
+        } catch (err) {
+            logger.error('Error tagging dataset', err);
+            throw new Error('Error tagging dataset');
         }
     }
 

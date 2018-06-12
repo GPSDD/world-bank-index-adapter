@@ -1,11 +1,10 @@
 const nock = require('nock');
 const chai = require('chai');
-const chaiHttp = require('chai-http');
 const should = chai.should();
 
-let requester;
+const { getTestServer } = require('./test-server');
 
-chai.use(chaiHttp);
+const requester = getTestServer();
 
 const dataset = {
     data: {
@@ -17,14 +16,6 @@ const dataset = {
 
 describe('E2E test', () => {
     before(() => {
-
-        nock(`${process.env.CT_URL}`)
-            .persist()
-            .post(`/api/v1/microservice`)
-            .reply(200);
-
-        const server = require('../../src/app');
-        requester = chai.request(server).keepOpen();
     });
 
     it('Load fields should return invalid request', async () => {
@@ -53,5 +44,8 @@ describe('E2E test', () => {
     });
 
     after(() => {
+        if (!nock.isDone()) {
+            throw new Error(`Not all nock interceptors were used: ${nock.pendingMocks()}`);
+        }
     });
 });
