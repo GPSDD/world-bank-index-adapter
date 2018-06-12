@@ -85,19 +85,21 @@ class WBIndexService {
             throw new Error('Error obtaining metadata');
         }
 
-        try {
-            logger.debug('Tagging dataset for WB dataset', dataset.tableName);
-            await ctRegisterMicroservice.requestToMicroservice({
-                method: 'POST',
-                uri: `/dataset/${dataset.id}/vocabulary/legacy`,
-                body: {
-                    tags: ['worldbank']
-                },
-                json: true
-            });
-        } catch (err) {
-            logger.error('Error tagging dataset', err);
-            throw new Error('Error tagging dataset');
+        if (!update) {
+            try {
+                logger.debug('Tagging dataset for WB dataset', dataset.tableName);
+                await ctRegisterMicroservice.requestToMicroservice({
+                    method: 'POST',
+                    uri: `/dataset/${dataset.id}/vocabulary/legacy`,
+                    body: {
+                        tags: ['worldbank']
+                    },
+                    json: true
+                });
+            } catch (err) {
+                logger.error('Error tagging dataset', err);
+                throw new Error('Error tagging dataset');
+            }
         }
     }
 
