@@ -9,6 +9,7 @@ const router = new Router({
 });
 
 class WbIndexRouter {
+
     static async dataAccessNotSupported(ctx) {
         ctx.set('Content-type', 'application/json');
         ctx.body = {
