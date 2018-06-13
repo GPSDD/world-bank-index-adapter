@@ -18,11 +18,16 @@ describe('E2E test', () => {
             .once()
             .reply(200, WB_API_FAKE_METADATA_RESPONSE);
         nock(`${process.env.CT_URL}`)
-            .patch(`/v1/dataset/${WB_FAKE_DATASET_CREATE_REQUEST.connector.id}`, {
-                dataset: {
-                    status: 2,
-                    errorMessage: 'Error - Error obtaining metadata'
-                }
+            .patch(`/v1/dataset/${WB_FAKE_DATASET_CREATE_REQUEST.connector.id}`, (request) => {
+                const expectedRequestContent = {
+                    dataset: {
+                        status: 2,
+                        errorMessage: `Error - Error obtaining metadata: Error: WB metadata format not valid`
+                    }
+                };
+
+                request.should.deep.equal(expectedRequestContent);
+                return true;
             })
             .once()
             .reply(200);

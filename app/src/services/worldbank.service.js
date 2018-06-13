@@ -44,7 +44,7 @@ class WBIndexService {
             });
             logger.debug('data', data);
             if (!data || data.length !== 2 || data[1].length !== 1) {
-                throw new Error('Format not valid');
+                throw new Error('WB metadata format not valid');
             }
             const wbMetadata = data[1][0];
             const metadata = {
@@ -82,7 +82,7 @@ class WBIndexService {
 
         } catch (err) {
             logger.error('Error obtaining metadata', err);
-            throw new Error('Error obtaining metadata');
+            throw new Error(`Error obtaining metadata: ${err}`);
         }
 
         if (!update) {
@@ -98,7 +98,7 @@ class WBIndexService {
                 });
             } catch (err) {
                 logger.error('Error tagging dataset', err);
-                throw new Error('Error tagging dataset');
+                throw new Error(`Error tagging dataset: ${err}`);
             }
         }
     }
