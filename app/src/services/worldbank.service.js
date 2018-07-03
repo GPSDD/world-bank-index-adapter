@@ -7,6 +7,7 @@ const ctRegisterMicroservice = require('ct-register-microservice-node');
 class WBIndexService {
 
     static async cronUpdate() {
+        const timeout = ms => new Promise(res => setTimeout(res, ms))
         try {
             logger.info('Running cron update');
             logger.debug('Obtaining datasets');
@@ -20,6 +21,7 @@ class WBIndexService {
                     try {
                         const dataset = datasets.data[i].attributes;
                         dataset.id = datasets.data[i].id;
+                        await timeout(1000);
                         await WBIndexService.register(dataset, dataset.userId, true);
                     } catch (err) {
                         logger.error('Error updating dataset', err);
