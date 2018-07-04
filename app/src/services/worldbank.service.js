@@ -38,6 +38,8 @@ class WBIndexService {
         logger.debug(`Obtaining metadata of indicator ${dataset.tableName}`);
 
         logger.debug('Obtaining metadata of dataset ', `${config.worldbank.metadata}`.replace(':indicator', dataset.tableName));
+
+        let wbMetadata;
         try {
             const data = await requestPromise({
                 method: 'GET',
@@ -48,7 +50,7 @@ class WBIndexService {
             if (!data || data.length !== 2 || data[1].length !== 1) {
                 throw new Error('WB metadata format not valid');
             }
-            const wbMetadata = data[1][0];
+            wbMetadata = data[1][0];
             const metadata = {
                 language: 'en',
                 name: wbMetadata.name,
@@ -88,13 +90,19 @@ class WBIndexService {
         }
 
         if (!update) {
+            const tags = ['worldbank'];
+
+            if (wbMetadata.topics && Array.isArray(wbMetadata.topics)) {
+                wbMetadata.topics.forEach(e => tags.push(e.value));
+            }
+
             try {
                 logger.debug('Tagging dataset for WB dataset', dataset.tableName);
                 await ctRegisterMicroservice.requestToMicroservice({
                     method: 'POST',
                     uri: `/dataset/${dataset.id}/vocabulary/legacy`,
                     body: {
-                        tags: ['worldbank']
+                        tags
                     },
                     json: true
                 });

@@ -79,7 +79,7 @@ describe('E2E test', () => {
         nock(`${process.env.CT_URL}`)
             .post(`/v1/dataset/${WB_DATASET_CREATE_REQUEST.connector.id}/vocabulary/legacy`, (body) => {
                 const expectedRequestBody = {
-                    tags: ['worldbank']
+                    tags: ['worldbank', 'Social Protection & Labor']
                 };
 
                 body.should.deep.equal(expectedRequestBody);

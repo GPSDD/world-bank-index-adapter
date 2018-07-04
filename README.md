@@ -35,8 +35,15 @@ It is necessary to define these environment variables:
 * CT_URL => Control Tower URL
 * NODE_ENV => Environment (prod, staging, dev)
 
-## Field correspondence
+### Cron task
 
+This component executes a periodic task that updates the metadata of each indexed RW dataset. The task is bootstrapped  
+[when the application server starts](https://github.com/GPSDD/world-bank-index-adapter/blob/master/app/src/app.js#L19). 
+The task's implementation can be found on `app/src/cron/cron` and the configuration is loaded from the 
+[config files](https://github.com/GPSDD/world-bank-index-adapter/blob/master/config/default.json#L18)
+
+
+## Field correspondence
 
 | Field in SDG Metadata     | Field in WB Metadata  | Value         |
 |---------------------------|-----------------------|---------------|
@@ -52,3 +59,16 @@ It is necessary to define these environment variables:
 | license                   |                       | 'CC BY 4.0'   |
 | info                      | topics                |               |
 | status                    | -                     | 'published'   |
+
+## Dataset tagging strategy
+
+
+### Taxonomy
+
+World Bank datasets have "topics" associated with them, which this connector uses to tag the index datasets. 
+Additionally, each WB dataset is tagged with the "worldbank" tag.
+
+### Graph
+
+World Bank datasets do not have a direct match to the graph elements, and thus no attempt at matching them is made. 
+

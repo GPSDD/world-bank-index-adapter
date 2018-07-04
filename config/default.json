@@ -15,5 +15,5 @@
         "dataSourceUrl": "https://data.worldbank.org/indicator/:indicator",
         "dataSourceEndpoint": "https://api.worldbank.org/v2/countries/all/indicators/:indicator?format=json&per_page=30000"
     },
-    "cron": "00 0 2 * * *"
+    "cron": "00 0 1 * * 0"
 }
